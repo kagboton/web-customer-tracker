@@ -3,6 +3,7 @@ package io.kagboton.springdemo.controller;
 import io.kagboton.springdemo.dao.CustomerDAO;
 import io.kagboton.springdemo.entity.Customer;
 import io.kagboton.springdemo.service.CustomerService;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,16 @@ public class CustomerController {
         model.addAttribute("customers", customers);
 
         return "list-customers";
+    }
+
+    @GetMapping("/showAddCustomerForm")
+    public String showAddCustomerForm(Model model){
+
+        Customer theCustomer = new Customer();
+
+        model.addAttribute("theCustomer", theCustomer);
+
+        return "customer-form";
     }
 
 }
