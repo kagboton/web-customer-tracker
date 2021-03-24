@@ -1,9 +1,7 @@
 package io.kagboton.springdemo.controller;
 
-import io.kagboton.springdemo.dao.CustomerDAO;
 import io.kagboton.springdemo.entity.Customer;
 import io.kagboton.springdemo.service.CustomerService;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,5 +66,17 @@ public class CustomerController {
         // delete the customer
         customerService.deleteCustomer(theId);
         return "redirect:/customer/list";
+    }
+
+    @GetMapping("/searchCustomer")
+    public String searchCustomer(@RequestParam("searchName") String searchName, Model theModel){
+
+        // search customer from the service
+        List<Customer> customers = customerService.searchCustomers(searchName);
+
+        // add customers to the model
+        theModel.addAttribute("customers", customers);
+
+        return "list-customers";
     }
 }
