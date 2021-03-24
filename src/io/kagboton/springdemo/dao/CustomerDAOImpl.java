@@ -1,12 +1,12 @@
 package io.kagboton.springdemo.dao;
 
 import io.kagboton.springdemo.entity.Customer;
+import io.kagboton.springdemo.util.SortUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,13 +18,34 @@ public class CustomerDAOImpl implements CustomerDAO {
     private SessionFactory sessionFactory;
 
     @Override
-    public List<Customer> getCustomers() {
+    public List<Customer> getCustomers(int theSortField) {
         // get the current hibernate session
         Session session = sessionFactory.getCurrentSession();
 
+
+        // determine the sort field
+
+        String sortFieldName = "";
+
+        switch (theSortField){
+            case SortUtils.FIRST_NAME :
+                sortFieldName = "firstName";
+                break;
+            case SortUtils.LAST_NAME :
+                sortFieldName = "lastName";
+                break;
+            case SortUtils.EMAIL :
+                sortFieldName = "email";
+                break;
+            default:
+                sortFieldName = "firstName";
+        }
+
         // create the query
-        Query<Customer> theQuery = session.createQuery("from Customer order by lastName",
+        String queryString = "from Customer order by " + sortFieldName;
+        Query<Customer> theQuery = session.createQuery(queryString,
                 Customer.class);
+
 
         // execute the query and get the result
         List<Customer> customers = theQuery.getResultList();

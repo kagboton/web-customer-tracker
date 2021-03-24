@@ -2,6 +2,7 @@ package io.kagboton.springdemo.controller;
 
 import io.kagboton.springdemo.entity.Customer;
 import io.kagboton.springdemo.service.CustomerService;
+import io.kagboton.springdemo.util.SortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +19,20 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/list")
-    public String listCustomers(Model model){
+    public String listCustomers(@RequestParam(required = false, name = "sort") String sort, Model model){
+
+        // customers list
+        List<Customer> customers = null;
 
         // get customers from the service
-        List<Customer> customers = customerService.getCustomers();
+        // check for sort field
+
+        if(sort != null){
+            int theSortField = Integer.parseInt(sort);
+            customers = customerService.getCustomers(theSortField);
+        }else{
+            customers = customerService.getCustomers(SortUtils.LAST_NAME);
+        }
 
         // add the customers to the model
         model.addAttribute("customers", customers);

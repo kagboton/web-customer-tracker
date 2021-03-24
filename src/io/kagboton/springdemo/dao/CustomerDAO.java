@@ -5,7 +5,7 @@ import io.kagboton.springdemo.entity.Customer;
 import java.util.List;
 
 public interface CustomerDAO {
-     List<Customer> getCustomers();
+     List<Customer> getCustomers(int theSortField);
      void saveCustomer(Customer customer);
      Customer getCustomerById(int customerId);
      void deleteCustomer(int theId);

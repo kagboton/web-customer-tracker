@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CustomerService {
 
-    List<Customer> getCustomers();
+    List<Customer> getCustomers(int theSortField);
     void saveCustomer(Customer customer);
     Customer getCustomerById(int id);
     void deleteCustomer(int theId);

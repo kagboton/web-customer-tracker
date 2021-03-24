@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@page import="io.kagboton.springdemo.util.SortUtils" %>
+<%@ page import="javax.persistence.Id" %>
 <html>
 <head>
     <title>Customers List</title>
@@ -29,10 +31,38 @@
 
             <!-- customers list table -->
             <table>
+
+                <!-- construct the first name sort link -->
+                <c:url var="firstNameSortLink" value="/customer/list">
+                    <c:param name="sort" value="<%= Integer.toString(SortUtils.FIRST_NAME) %>" />
+                </c:url>
+
+                <!-- construct the last name sort link -->
+                <c:url var="lastNameSortLink" value="/customer/list">
+                    <c:param name="sort" value="<%= Integer.toString(SortUtils.LAST_NAME) %>" />
+                </c:url>
+
+                <!-- construct the email sort link -->
+                <c:url var="emailSortLink" value="/customer/list">
+                    <c:param name="sort" value="<%= Integer.toString(SortUtils.EMAIL) %>" />
+                </c:url>
+
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
+                    <!-- the first name sort link -->
+                    <th>
+                        <a href="${firstNameSortLink}">First Name</a>
+                    </th>
+
+                    <!-- the last name sort link -->
+                    <th>
+                        <a href="${lastNameSortLink}">Last Name</a>
+                    </th>
+
+                    <!-- the email sort link -->
+                    <th>
+                        <a href="${emailSortLink}">Email</a>
+                    </th>
+
                     <th>Action</th>
                 </tr>
 
